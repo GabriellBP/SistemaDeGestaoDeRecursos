@@ -95,39 +95,70 @@ public class SistemaDeGestaoDeRecursos {
         System.out.println("2-Apresentações");
         System.out.println("3-Laboratório");
         tipoAtividade[qtdAtividades] = leitor.nextInt();
-        int temp = 0; 
-        if(tipoAtividade[qtdAtividades] == 1 || tipoAtividade[qtdAtividades] == 3)
-            temp = 4;
+        int temp = 0, aux = 0; 
         System.out.println("Paticipantes possíveis para a atividade:");
         for(int i = 0; i<qtdUsuarios; i++){
-            if(temp == 4){
-                if(tipoUsuario[i] == temp){
-                    System.out.println("Usuario:"+nomeUsuario+", id:"+i);
-                    qtdParticipAtividade++;
-                }
-            }else{
-                System.out.println("Usuario:"+nomeUsuario+", id:"+i);
-                qtdParticipAtividade++;
-            }
-        }
-        if(qtdParticipAtividade == 0){
-            System.out.println("Nenhum!");
-            return 1;
+                System.out.println("Usuario:"+nomeUsuario[i]+", id:"+i);
         }
         System.out.println("Quantos usuarios participarão da atividade?");
-        qtdParticipAtividade = leitor.nextInt();
-        for(int i = 0; i<qtdParticipAtividade; i++){
-          participAtividade[qtdAtividades][i]
+        qtdParticipAtividade[qtdAtividades] = leitor.nextInt();
+        for(int i = 0; i<qtdParticipAtividade[qtdAtividades]; i++){
+            participAtividade[qtdAtividades][i] = leitor.nextInt();
         }
-        
         qtdAtividades++;
         return 0;
     }
     
     /*Alocação de recursos*/
-    static Date[] inicioRecurso = new Date[max];//new SimpleDateFormat("dd/mm/yyyy HH:mm:ss"); 
-    static Date[] terminoRecurso = new Date[max];
-    
+    static String[] statusAlocacao = new String[max];
+    static Date[] inicioAlocacao = new Date[max];//new SimpleDateFormat("dd/mm/yyyy HH:mm:ss"); 
+    static Date[] terminoAlocacao = new Date[max];
+    static int[] atividAlocacao = new int[max];
+    static int[] recursoAlocacao = new int[max];
+    static int[] usuarioAlocacao = new int[max];
+    static int qtdAlocacao = 0;
+    public static int alocarRecurso(){
+        if(qtdAtividades == 0){
+            System.out.println("Nenhuma atividade foi criada!");
+            return 1;
+        }
+        if(qtdRecursos == 0){
+            System.out.println("Não há recursos para serem alocados!");
+            return 1;
+        }
+        if(qtdUsuarios == 0){
+            System.out.println("Não há usuários para alocar recursos!");
+        }
+        System.out.println("Digite o id da atividade para o qual será alocado o recurso:");
+        int escolha, temp = 0;
+        for(int i = 0; i<qtdAtividades; i++)
+                System.out.println("Atividade:"+tituloAtividade[i]+", id:"+i);
+        escolha = leitor.nextInt();
+        System.out.println("Usuarios disponíveis para alocar recurso para esta atividade:");
+        for(int i = 0; i<qtdUsuarios; i++){
+            if(tipoAtividade[escolha] == 1 || tipoAtividade[escolha] == 3){
+                if(tipoUsuario[i] == 4){
+                    System.out.println("Usuario:"+nomeUsuario[i]+", id:"+i);
+                    temp = 1;
+                }
+            }else{
+                System.out.println("Usuario:"+nomeUsuario[i]+", id:"+i);
+                temp = 1;
+            }
+        }
+        if(temp != 1){
+            System.out.println("Nenhum!");
+            return 1;
+        }
+        System.out.println("Digite o id do usuario que esta alocando esse recurso:");
+        usuarioAlocacao[qtdAlocacao] = leitor.nextInt();
+        System.out.println("Escolha o id do recurso a ser alocado:");
+        for(int i = 0; i<qtdRecursos; i++)
+            System.out.println("Recurso:"+nomeRecurso[i]+", id:"+i);
+        recursoAlocacao[qtdAlocacao] = leitor.nextInt();
+        
+        return 0;
+    }
     
     
     public static void menu(){
@@ -137,10 +168,11 @@ public class SistemaDeGestaoDeRecursos {
         System.out.println("2-Cadastrar recurso");
         System.out.println("3-Iniciar uma atividade");
         System.out.println("4-Alocar recurso");
-        System.out.println("5-Consultar usuario");
-        System.out.println("6-Listar usuarios");
-        System.out.println("7-Consultar recurso");
-        System.out.println("8-Listar recursos");
+        System.out.println("5-Gerenciar Alocações");
+        System.out.println("6-Consultar usuario");
+        System.out.println("7-Listar usuarios");
+        System.out.println("8-Consultar recurso");
+        System.out.println("9-Listar recursos");
         System.out.println("0-Exit");
         int resp = leitor.nextInt();
         switch (resp) {
@@ -164,15 +196,21 @@ public class SistemaDeGestaoDeRecursos {
                 break;
             case 3:
                 limpaTela();
-                
+                if(iniciarAtividade() == 0)
+                    System.out.println("Iniciada com Sucesso!");
+                else
+                    System.out.println("Houve algum erro!");
+                menu();
                 break;
             case 4:
                 limpaTela();
+                //
                 break;
             case 5:
                 limpaTela();
                 break;
             default:
+                limpaTela();
                 System.out.println("Escolha uma opção válida!");
                 menu();
                 break;
