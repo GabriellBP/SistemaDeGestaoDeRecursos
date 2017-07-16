@@ -1,9 +1,12 @@
 
 package sistemadegestaoderecursos;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,6 +19,14 @@ public class SistemaDeGestaoDeRecursos {
     static void limpaTela() {//colocar isso onde não tem ainda
         System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     }
+    
+    public static void relatorio(){
+        System.out.println("Numero de usuarios: "+qtdUsuarios);
+        System.out.println("Numero de recursos: "+qtdRecursos);
+        System.out.println("Numero de alocações: "+qtdAlocacao);
+        System.out.println("Total de atividades: "+qtdAtividades);
+    }
+    
     /*Usuario:*/
     static String[] nomeUsuario = new String[max];
     static String[] emailUsuario = new String[max];
@@ -40,6 +51,50 @@ public class SistemaDeGestaoDeRecursos {
         tipoUsuario[qtdUsuarios] = leitor.nextInt();
         qtdUsuarios++;
         return 0; 
+    }
+    
+    public static int consulUsuario(){
+        System.out.println("Digite o id do Usuário a ser consultado:");
+        int id = leitor.nextInt();
+        System.out.println("Nome do usuario: "+nomeUsuario[id]);
+        System.out.println("Email do usuario: "+emailUsuario[id]);
+        String tipo;
+        switch(tipoUsuario[id]){
+            case 1:
+                tipo = "Aluno de Graduação";
+                break;
+            case 2:
+                tipo = "Aluno de Mestrado";
+                break;
+            case 3:
+                tipo = "Aluno de Doutorado";
+                break;
+            case 4:
+                tipo = "Professor";
+                break;
+            case 5:
+                tipo = "Pesquisador";
+                break;
+            default:
+                tipo = "Admin";
+                break;
+        }
+        System.out.println("Tipo do usuario: "+tipo);
+        System.out.println("Atividades iniciadas e recursos alocados:");
+        for(int i = 0; i<qtdAlocacao; i++){
+            if(usuarioAlocacao[i] == id){
+                System.out.println("Recurso: "+nomeRecurso[recursoAlocacao[i]]);
+                System.out.println("Atividade: "+tituloAtividade[atividAlocacao[i]]);
+            }
+        }
+            
+        return 0;
+    }
+    
+    public static void listarUsuarios(){
+        for(int i = 0; i<qtdUsuarios; i++){
+            System.out.println("Usuario de id "+i+": "+nomeUsuario[i]);
+        }
     }
     /*Recurso:*/
     static String[] nomeRecurso = new String[max];
@@ -67,6 +122,28 @@ public class SistemaDeGestaoDeRecursos {
         qtdRecursos++;
         return 0;
     }
+    
+    public static int consulRecurso(){
+        System.out.println("Digite o id do recurso a ser consultado:");
+        int id = leitor.nextInt();
+        System.out.println("Nome do recurso: "+nomeRecurso[id]);
+        System.out.println("Responsável pelo recurso "+respRecurso[id]);
+        for(int i = 0; i<qtdAlocacao; i++){
+            if(recursoAlocacao[i] == id){
+                System.out.println("Atividade "+tituloAtividade[atividAlocacao[i]]+" está associada a esse recurso");
+                System.out.println("Usuario "+nomeUsuario[usuarioAlocacao[i]]+" está associado a essse recurso");
+            }
+        }
+        
+        return 0;
+    }
+    
+    public static void listarRecursos() {
+        for(int i = 0; i<qtdRecursos; i++){
+            System.out.println("Nome do recurso de id "+i+": "+nomeRecurso[i]);
+        }
+    }
+    
     /*Inicio de uma atividade*/
     static String[] tituloAtividade = new String[max];
     static String[] descriAtividade = new String[max];
@@ -113,6 +190,7 @@ public class SistemaDeGestaoDeRecursos {
     static String[] statusAlocacao = new String[max];
     static Date[] inicioAlocacao = new Date[max];//new SimpleDateFormat("dd/mm/yyyy HH:mm:ss"); 
     static Date[] terminoAlocacao = new Date[max];
+    static SimpleDateFormat conversor = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     static int[] atividAlocacao = new int[max];
     static int[] recursoAlocacao = new int[max];
     static int[] usuarioAlocacao = new int[max];
@@ -156,10 +234,74 @@ public class SistemaDeGestaoDeRecursos {
         for(int i = 0; i<qtdRecursos; i++)
             System.out.println("Recurso:"+nomeRecurso[i]+", id:"+i);
         recursoAlocacao[qtdAlocacao] = leitor.nextInt();
+        leitor.nextLine();
+        Date inicioD;
+        Date terminoD;
         
+        while (true){
+            break;
+        }
+        while(true){
+            System.out.println("Data de inicio da alocação: (DD/MM/AAAA HH:MM)");
+            String inicio = leitor.nextLine();
+            try {
+                inicioD = conversor.parse(inicio);
+            } catch (ParseException ex) {
+                Logger.getLogger(SistemaDeGestaoDeRecursos.class.getName()).log(Level.SEVERE, null, ex);
+                continue;
+            }
+            System.out.println("Data de termino da alocação: (DD/MM/AAAA HH:MM)");
+            String termino = leitor.nextLine();
+            try {
+                terminoD = conversor.parse(termino);
+            } catch (ParseException ex) {
+                Logger.getLogger(SistemaDeGestaoDeRecursos.class.getName()).log(Level.SEVERE, null, ex);
+                continue;
+            }
+            if (!inicioD.before(terminoD)) {
+                System.out.println("Datas inválidas, insira as datas corretamente!");
+                continue;
+            }
+            int aux = 0;
+            for(int i = 0; i<qtdAlocacao; i++){
+                if(recursoAlocacao[i] == recursoAlocacao[qtdAlocacao] || usuarioAlocacao[i] == usuarioAlocacao[qtdAlocacao]){
+                    if (!inicioD.after(terminoAlocacao[i]) && !terminoD.before(inicioAlocacao[i])) {
+                        System.out.println("Recurso já alocado para este horario");
+                        System.out.println("Deseja tentar novamente? 1-Sim; 2-Não");
+                        int confirmacao = leitor.nextInt();
+                        if(confirmacao == 1){
+                            aux = 1;
+                            break;
+                        }
+                        else return 1;
+                    }
+                }
+            }
+            if(aux == 0) break;           
+        }
+        inicioAlocacao[qtdAlocacao] = inicioD;
+        terminoAlocacao[qtdAlocacao] = terminoD;
+        statusAlocacao[qtdAlocacao] = "Em processo de alocação";
+        qtdAlocacao++;
         return 0;
     }
     
+    public static int gerenciarAlocacao(){
+        System.out.println("Digite o id da Alocação a ser gerenciada:");
+        for(int i = 0; i<qtdAlocacao; i++){
+            System.out.println("Recurso: "+nomeRecurso[recursoAlocacao[i]]+", Atividade: "+tipoAtividade[atividAlocacao[i]]);
+        }
+        int idAloc = leitor.nextInt();
+        //System.out.println("Escolha o novo status da alocação: 1 - alocado, 2 - em andamento e 3 - concluído");
+        String proxStatus;
+        if(statusAlocacao[idAloc].startsWith("Em proc")) proxStatus = "Alocado";
+        else if(statusAlocacao[idAloc].startsWith("Aloc")) proxStatus = "Em andamento";
+        else proxStatus = "Concluído";
+        System.out.println("Deseja alterar o status da alocacao para: "+proxStatus+"1-Sim; 2-Não");
+        int escolha = leitor.nextInt();
+        if(escolha == 1) statusAlocacao[idAloc] = proxStatus;
+        return 0;
+    }
     
     public static void menu(){
         leitor.nextLine();//limpar o buff
@@ -173,6 +315,7 @@ public class SistemaDeGestaoDeRecursos {
         System.out.println("7-Listar usuarios");
         System.out.println("8-Consultar recurso");
         System.out.println("9-Listar recursos");
+        System.out.println("10-Emitir relatorio");
         System.out.println("0-Exit");
         int resp = leitor.nextInt();
         switch (resp) {
@@ -204,10 +347,38 @@ public class SistemaDeGestaoDeRecursos {
                 break;
             case 4:
                 limpaTela();
-                //
+                if(alocarRecurso()== 0)
+                    System.out.println("Alocado com Sucesso!");
+                else
+                    System.out.println("Houve algum erro!");
+                menu();
                 break;
             case 5:
                 limpaTela();
+                 if(gerenciarAlocacao()== 0)
+                    System.out.println("Gerenciado com Sucesso!");
+                else
+                    System.out.println("Houve algum erro!");
+                break;
+            case 6:
+                limpaTela();
+                consulUsuario();
+                break;
+            case 7:
+                limpaTela();
+                listarUsuarios();
+                break;
+            case 8:
+                limpaTela();
+                consulRecurso();
+                break;
+            case 9:
+                limpaTela();
+                listarRecursos();
+                break;
+            case 10:
+                limpaTela();
+                relatorio();
                 break;
             default:
                 limpaTela();
