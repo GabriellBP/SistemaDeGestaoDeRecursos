@@ -359,26 +359,32 @@ public class SistemaDeGestaoDeRecursos {
                     System.out.println("Gerenciado com Sucesso!");
                 else
                     System.out.println("Houve algum erro!");
+                 menu();
                 break;
             case 6:
                 limpaTela();
                 consulUsuario();
+                menu();
                 break;
             case 7:
                 limpaTela();
                 listarUsuarios();
+                menu();
                 break;
             case 8:
                 limpaTela();
                 consulRecurso();
+                menu();
                 break;
             case 9:
                 limpaTela();
                 listarRecursos();
+                menu();
                 break;
             case 10:
                 limpaTela();
                 relatorio();
+                menu();
                 break;
             default:
                 limpaTela();
