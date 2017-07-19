@@ -196,6 +196,27 @@ public class SistemaDeGestaoDeRecursos {
         return 0;
     }
     
+    public static void consulAtividade(){
+        System.out.println("Digite o id da atividade a ser exibida:");
+        int id = leitor.nextInt();
+        leitor.nextLine();
+        System.out.println("Titulo da atividade: "+tituloAtividade[id]);
+        System.out.println("Descrição da atividade: "+descriAtividade[id]);
+        System.out.println("Participantes da atividade: ");
+        for(int i = 0; i<qtdParticipAtividade[id]; i++){
+            System.out.println(nomeUsuario[participAtividade[id][i]]);
+        }
+        System.out.println("Material da atividade: "+materialAtividade[id]);
+        String tipo;
+        if(tipoAtividade[id] == 1) tipo = "Aula Tradicional";
+        else if(tipoAtividade[id] == 2) tipo = "Apresentações";
+        else tipo = "Laboratório";
+        System.out.println("Tipo de atividade: "+tipo);
+        System.out.println("\n\nDigite uma tecla para continuar...");
+        leitor.nextLine();
+        limpaTela();
+    }
+    
     /*Alocação de recursos*/
     static String[] statusAlocacao = new String[max];
     static Date[] inicioAlocacao = new Date[max];//new SimpleDateFormat("dd/mm/yyyy HH:mm:ss"); 
@@ -382,8 +403,9 @@ public class SistemaDeGestaoDeRecursos {
         System.out.println("7-Listar usuarios");
         System.out.println("8-Consultar recurso");
         System.out.println("9-Listar recursos");
-        System.out.println("10-Consultar alocações");
-        System.out.println("11-Emitir relatorio");
+        System.out.println("10-Consultar atividade");
+        System.out.println("11-Consultar alocação");
+        System.out.println("12-Emitir relatorio");
         System.out.println("0-Exit");
         int resp = leitor.nextInt();
         leitor.nextLine();
@@ -452,10 +474,15 @@ public class SistemaDeGestaoDeRecursos {
                 break;
             case 10:
                 limpaTela();
+                consulAtividade();
+                menu();
+                break;        
+            case 11:
+                limpaTela();
                 consulAlocacao();
                 menu();
                 break;
-            case 11:
+            case 12:
                 limpaTela();
                 relatorio();
                 menu();
