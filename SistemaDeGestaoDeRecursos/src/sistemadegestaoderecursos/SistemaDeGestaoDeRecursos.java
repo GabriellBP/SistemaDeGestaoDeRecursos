@@ -82,7 +82,7 @@ public class SistemaDeGestaoDeRecursos {
                 System.out.println("Atividade: "+tituloAtividade[atividAlocacao[i]]);
             }
         }
-        System.out.println("\n\nDigite uma tecla para continuar...");
+        System.out.println("\n\nTecle enter para continuar...");
         leitor.nextLine();
         limpaTela(); 
         return 0;
@@ -92,7 +92,7 @@ public class SistemaDeGestaoDeRecursos {
         for(int i = 0; i<qtdUsuarios; i++){
             System.out.println("Usuario de id "+i+": "+nomeUsuario[i]);
         }
-        System.out.println("\n\nDigite uma tecla para continuar...");
+        System.out.println("\n\nTecle enter para continuar...");
         leitor.nextLine();
         limpaTela();
     }
@@ -136,7 +136,7 @@ public class SistemaDeGestaoDeRecursos {
                 System.out.println("Usuario "+nomeUsuario[usuarioAlocacao[i]]+" está associado a essse recurso");
             }
         }
-        System.out.println("\n\nDigite uma tecla para continuar...");
+        System.out.println("\n\nTecle enter para continuar...");
         leitor.nextLine();
         limpaTela();
         return 0;
@@ -146,7 +146,7 @@ public class SistemaDeGestaoDeRecursos {
         for(int i = 0; i<qtdRecursos; i++){
             System.out.println("Nome do recurso de id "+i+": "+nomeRecurso[i]);
         }
-        System.out.println("\n\nDigite uma tecla para continuar...");
+        System.out.println("\n\nTecle enter para continuar...");
         leitor.nextLine();
         limpaTela();
     }
@@ -188,6 +188,7 @@ public class SistemaDeGestaoDeRecursos {
         System.out.println("Quantos usuarios participarão da atividade?");
         qtdParticipAtividade[qtdAtividades] = leitor.nextInt();
         leitor.nextLine();
+        System.out.println("Digite o id do(s) usuario(s): ");
         for(int i = 0; i<qtdParticipAtividade[qtdAtividades]; i++){
             participAtividade[qtdAtividades][i] = leitor.nextInt();
             leitor.nextLine();
@@ -212,7 +213,7 @@ public class SistemaDeGestaoDeRecursos {
         else if(tipoAtividade[id] == 2) tipo = "Apresentações";
         else tipo = "Laboratório";
         System.out.println("Tipo de atividade: "+tipo);
-        System.out.println("\n\nDigite uma tecla para continuar...");
+        System.out.println("\n\nTecle enter para continuar...");
         leitor.nextLine();
         limpaTela();
     }
@@ -323,7 +324,7 @@ public class SistemaDeGestaoDeRecursos {
     public static int gerenciarAlocacao(){
         System.out.println("Digite o id da Alocação a ser gerenciada:");
         for(int i = 0; i<qtdAlocacao; i++){
-            System.out.println("Recurso: "+nomeRecurso[recursoAlocacao[i]]+", Atividade: "+tipoAtividade[atividAlocacao[i]]);
+            System.out.println("Id: "+i+", Recurso: "+nomeRecurso[recursoAlocacao[i]]+", Atividade: "+tipoAtividade[atividAlocacao[i]]);
         }
         int idAloc = leitor.nextInt();
         leitor.nextLine();
@@ -347,7 +348,7 @@ public class SistemaDeGestaoDeRecursos {
         System.out.println("Data de inicio: "+inicioAlocacao[id]+"\nData de fim: "+terminoAlocacao[id]);
         System.out.println("Atividade da alocação: "+tituloAtividade[atividAlocacao[id]]);
         System.out.println("Usuario responsável pela alocação: "+nomeUsuario[usuarioAlocacao[id]]);
-        System.out.println("\n\nDigite uma tecla para continuar...");
+        System.out.println("\n\nTecle enter para continuar...");
         leitor.nextLine();
         limpaTela();
     }
@@ -366,7 +367,7 @@ public class SistemaDeGestaoDeRecursos {
             if(statusAlocacao[i].startsWith("Em proc")) emProc++;
             else if(statusAlocacao[i].startsWith("Aloc")) alocad++;
             else if(statusAlocacao[i].startsWith("Em anda")) emAnda++;
-            else if(statusAlocacao[i].startsWith("conclu")) conclu++;
+            else if(statusAlocacao[i].startsWith("Conclu")) conclu++;
         }
         System.out.println("Numero total de recursos: "+qtdRecursos);
         System.out.println("Numero de recursos em processo de alocação: "+emProc);
@@ -386,7 +387,7 @@ public class SistemaDeGestaoDeRecursos {
         System.out.println("Atividades \"Aula tradicional\": "+aulaT);
         System.out.println("Atividades \"Apresentações\": "+apres);
         System.out.println("Atividades \"Laboratório\": "+labor);
-        System.out.println("\n\nDigite uma tecla para continuar...");
+        System.out.println("\n\nTecle enter para continuar...");
         leitor.nextLine();
         limpaTela();
     }
