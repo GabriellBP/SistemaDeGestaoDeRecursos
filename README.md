@@ -1,6 +1,7 @@
 # SistemaDeGestaoDeRecursos
 
-Padrões de Projeto a serem aplicados:
+## Padrões de Projeto aplicados:
 * Prototype
 * State
 * Strategy
+* Alguns conceitos de Proxy
