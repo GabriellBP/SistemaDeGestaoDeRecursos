@@ -402,6 +402,10 @@ public class SistemaDeGestaoG implements SistemaDeGestaoDeRecursos{
                             System.out.println("ID: "+a.getResponsavel().getId()+", Nome: "+a.getResponsavel().getNome()+ ", Tipo: "+a.getResponsavel().toString());
                             System.out.println("Atividade: ");
                             System.out.println("Titulo: "+a.getAtividade().getTitulo()+", Tipo: "+a.getAtividade().toString()+", Inicio: "+a.getDataInicio()+", Fim: "+a.getDataFim());
+			    System.out.println("Participantes:");
+                            for(UsuarioStrategy u : a.getAtividade().getParticipantes()){
+                                System.out.println("    ID: "+u.getId()+", Nome: "+u.getNome()+", CPF: "+u.getCpf());
+                            }
                             System.out.println("");
                         }
                     }
